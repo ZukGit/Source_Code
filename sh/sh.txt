@@ -1,0 +1,21 @@
+#!/usr/bin/expect -f
+spawn sudo su
+expect "Password"      
+send "zzj7520254\r"
+interact
+
+
+#!/bin/sh
+git add ./
+git commit -m "ZukGit的提交"
+git push origin master
+
+
+
+vim  /etc/bashrc
+alias suz="/usr/local/sh_expect_work/suz.sh"
+alias cmt="/usr/local/sh_expect_work/cmt.sh"
+alias cdsh='cd /usr/local/sh_expect_work/'
+alias cdgit='cd  /Users/aaa/Desktop/code_place/zzj_git/'
+
+
