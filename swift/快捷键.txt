@@ -1,0 +1,41 @@
+Mac OS快捷键:
+Shift + Command + A   // 打开所有应用程序的文件夹
+Shift + Command + C   // 打开我的电脑文件夹
+Shift + Command + D   // 打开我的桌面文件夹
+Shift + Command + H   // 打开当前用户Home目录
+Shift + Command + K   // 打开网络(打开网络路由硬盘)
+Shift + Command + N  // 创建新的文件夹
+Shift + Command + 3   // 全屏截屏
+Shift + Command + 4   // 手动截屏
+Option + Command + D   // 隐藏Dock
+
+Command + C               // 拷贝选中项
+Command + W               // 关闭当前应用
+Command + F               // 打开文件搜索
+Command +  i             // 显示文件夹详情
+Command +  L             // 为选中项创建快捷方式
+Command +  F3             // 最小化所有窗口
+Command +  H             // 隐藏当前的窗口
+Command +  1 | 2| 3 | 4              // 在文件夹中调整文件的显
+示样式
+Command + Shift + .（句号） //显示隐藏文件
+
+Command +  delete              // 删除选中项
+Shift + Tab    // 切换打开的应用
+Control + 空格    // 切换输入法
+
+
+
+defaults write com.apple.finder _FXShowPosixPathInTitle -bool TRUE;killall Finder   //打开Finder显示路径
+
+defaults delete com.apple.finder _FXShowPosixPathInTitle;killall Finder  //恢复默认Finder显示
+
+
+#!/usr/bin/expect -f
+spawn sudo su
+expect "Password"      
+send "zzj7520254\r"
+interact
+
+vim  /etc/bashrc
+alias suz="/usr/local/sh_expect_work/suz.sh"
