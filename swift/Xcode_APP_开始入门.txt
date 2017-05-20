@@ -1,0 +1,187 @@
+Xcode快捷键
+
+1. Command + /    //行注释
+   2.放大字体 Xcode—>Preference—>Font & Color 
+   3.去除Xcode输出的多与信息
+if we're in the real pre-commit handler we can't actually add any new fences due to CA restrictio
+Product—>Schema—>Edit Schema —>Run —>Environment Variables  新添加一个环境变量
+Key:   OS_ACTIVITY_MODE
+Value: disable
+
+4.快速搜索功能
+Command + Shift + O  //快速搜索
+  
+5.快速折叠方法
+Command +  Option +   →  或者  Command +  Option +   →
+
+===================================
+案例1: 添加使用图片
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+        let img = UIImage(named:"2.jpg")
+        let imgView = UIImageView(image: img)
+        self.view.addSubview(imgView)
+    }
+
+
+案例2: 检测手机屏幕方向
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+        //let img = UIImage(named:"2.jpg")
+        //let imgView = UIImageView(image: img)
+        //self.view.addSubview(imgView)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.orientationChanged(_:)), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+    }
+    
+    func orientationChanged(_ notification: Notification) {
+        // Dispose of any resources that can be recreated.
+        let device = UIDevice.current
+        switch device.orientation {
+        case .portrait:  //直立
+              print("直立");
+        case .portraitUpsideDown: //上下颠倒
+              print("上下颠倒");
+        case .landscapeLeft:
+              print("横向 Home在右侧");
+        case .landscapeRight:
+              print("横向 Home在左侧");
+        case .faceUp:
+              print("朝上 Home在向上");
+        case .faceDown:
+              print("朝下 Home向下");
+        case .unknown:
+              print("方向未知");
+        }
+    }
+
+
+案例3: 检测手机应用的活动状态
+
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        print("application_1")
+        return true
+    }
+
+    func applicationWillResignActive(_ application: UIApplication) {
+                print("applicationWillResignActive_2")
+    }
+
+    func applicationDidEnterBackground(_ application: UIApplication) {
+                print("applicationDidEnterBackground_3")
+    }
+
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        print("applicationWillEnterForeground_4")
+    }
+
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        print("applicationDidBecomeActive_5")
+    }
+
+    func applicationWillTerminate(_ application: UIApplication) {
+                print("applicationWillTerminate_6")
+    }
+
+
+案例4: 控制台输出日志方式  
+        print("first");
+        debugPrint("second");
+        CFShow("Thrid  aaa " as CFTypeRef)
+        let position = (x:10,y:5) 
+        dump(position)    // 把对象的详细信息输出
+        
+        let str = "world"
+        print(" Hello " + str);    // 引号后面必须有空格
+        print(" Hello \(str)")
+
+
+
+
+案例5: 在手机顶部显示风火轮   提示等待
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true  // 显示风火轮   提示等待
+}
+
+
+案例6: 添加不同尺寸的图标 必须是png格式的
+20pt 对应的图标
+2x : 40*40
+3x : 60*60
+
+
+29pt 对应的图标
+2x : 58*58
+3x : 87*87
+
+
+40pt 对应的图标
+2x : 80*80
+3x : 120*120
+
+
+60pt 对应的图标
+2x : 120*120
+3x : 180*180
+
+
+案例7: 读取应用配置信息
+
+class ViewController: UIViewController {
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+        let mainBundle = Bundle.main   // 获得当前可执行应用所在目录
+        let identifier = mainBundle.bundleIdentifier//获得应用标识符一一对应
+        let info = mainBundle.infoDictionary //获得程序包的缩影配置信息
+        let bundle = mainBundle.object(forInfoDictionaryKey: "CFBundleName")
+        let version = mainBundle.object(forInfoDictionaryKey: "CFBundleShortVersionString")
+        
+        print(" identifier = \(String(describing: identifier))");
+        print(" version = \(String(describing: version))");
+        print(" bundle = \(String(describing: bundle))");
+        print(" info = \(String(describing: info))");
+}
+
+输出:
+ identifier = Optional("zukgit.-519")
+ version = Optional(1.0)
+ bundle = Optional(0519)
+ info = Optional(["BuildMachineOSBuild": 16D32, "DTPlatformName": iphonesimulator, "DTPlatformVersion": 10.3, "CFBundleDevelopmentRegion": en, "DTXcode": 0832, "CFBundleIdentifier": zukgit.-519, "DTCompiler": com.apple.compilers.llvm.clang.1_0, "CFBundleShortVersionString": 1.0, "CFBundleExecutable": 0519, "DTPlatformBuild": , "LSRequiresIPhoneOS": 1, "CFBundleVersion": 1, "UILaunchStoryboardName": LaunchScreen, "CFBundleSupportedPlatforms": <__NSArrayM 0x610000055bd0>(
+iPhoneSimulator
+)
+, "CFBundleInfoDictionaryVersion": 6.0, "DTSDKBuild": 14E269, "UIDeviceFamily": <__NSArrayM 0x610000055c30>(
+1
+)
+, "CFBundleNumericVersion": 16809984, "UISupportedInterfaceOrientations": <__NSArrayM 0x610000055d20>(
+UIInterfaceOrientationPortrait,
+UIInterfaceOrientationLandscapeLeft,
+UIInterfaceOrientationLandscapeRight
+)
+, "DTSDKName": iphonesimulator10.3, "CFBundleIcons": {
+    CFBundlePrimaryIcon =     {
+        CFBundleIconFiles =         (
+            AppIcon40x40,
+            AppIcon60x60
+        );
+    };
+}, "UIMainStoryboardFile": Main, "DTXcodeBuild": 8E2002, "CFBundlePackageType": APPL, "CFBundleName": 0519, "UIRequiredDeviceCapabilities": <__NSArrayM 0x610000055c00>(
+armv7
+)
+, "MinimumOSVersion": 10.3])
+
+
+
+
+
+
+
+
+
