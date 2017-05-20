@@ -14,7 +14,9 @@ Command + Shift + O  //快速搜索
 5.快速折叠方法
 Command +  Option +   →  或者  Command +  Option +   →
 
-===================================
+6.快捷键运行APP
+Command +  R
+===================================1.开始入门==============================
 案例1: 添加使用图片
 
     override func viewDidLoad() {
@@ -183,5 +185,325 @@ armv7
 
 
 
+===================================2.视图与手势==============================
 
+案例1: UI视图的基本使用
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+        
+        let rect1 = CGRect(x: 30, y: 50, width: 200, height: 200) //CGRect定义了一个矩形区域 原点 宽高
+        let view1 = UIView(frame: rect1)
+        view1.backgroundColor = UIColor.brown // 设置UI的背景颜色为棕色
+        
+        
+        let rect2 = CGRect(x: 90, y: 120, width: 200, height: 200) //CGRect定义了一个矩形区域 原点 宽高
+        let view2 = UIView(frame: rect2)
+        view2.backgroundColor = UIColor.purple // 设置UI的背景颜色为棕色
+        self.view.addSubview(view1)
+        self.view.addSubview(view2)
+}
+
+
+
+
+
+案例2: UI视图的基本使用
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+        
+        //CGRect定义了一个矩形区域 原点 宽高  使用了匿名类
+        let view1 = UIView(frame: CGRect(x: 20, y: 80, width: 200, height: 200))
+        view1.backgroundColor = UIColor.red // 设置UI的背景颜色为棕色
+        self.view.addSubview(view1)
+
+        let view2 = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
+        view2.backgroundColor = UIColor.yellow // 设置UI的背景颜色为棕色
+        view2.bounds = CGRect(x: -20, y: -80, width: 200, height: 200)
+        //(以该位置为原点)设置视图本地坐标系统中的位置和大小 将会影响子视图
+        self.view.addSubview(view2)
+        
+        // 设置在view2(-20 , -80)    view3(0 , 0)   那么view3以 (-20 ,-80)为原点那么view3的真是屏幕坐标就是 (20 , 80)
+        let view3 = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        view3.backgroundColor = UIColor.blue // 设置UI的背景颜色为棕色
+        view2.addSubview(view3) // 将第三个视图添加到第二个视图中
+
+}
+
+
+
+
+案例3: UI视图的基本操作(移除  增加 替换) 按钮的使用方法
+    func addView(_ sender : UIButton) {
+      let mRect1 = CGRect(x: 60, y: 90, width: 200, height: 200) //CGRect定义了一个矩形区域 原点 宽高
+      let mView1 = UIView(frame: mRect1)
+      mView1.backgroundColor = UIColor.purple
+      mView1.tag = 1   //给视图指定一个标识  tag  那么在以后可通过该tag找到该视图
+      self.view.addSubview(mView1)
+    }
+    
+    func bringViewBack(_ sender : UIButton) {
+        let mView2 = self.view.viewWithTag(1)  // 找到在add中添加的视图 通过tag 1 找到
+        self.view.sendSubview(toBack: mView2!)
+        
+    }
+    
+    func removeView(_ sender : UIButton) {
+        let mView3 = self.view.viewWithTag(1)  // 找到在add中添加的视图 通过tag 1 找到
+        mView3?.removeFromSuperview()
+    }
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+        
+        let rect1 = CGRect(x: 30, y: 50, width: 200, height: 200) //CGRect定义了一个矩形区域 原点 宽高
+        let view1 = UIView(frame: rect1)
+        view1.backgroundColor = UIColor.brown // 设置UI的背景颜色为棕色
+        self.view.addSubview(view1)
+        
+        
+        let btAdd = UIButton(frame: CGRect(x: 30, y: 350, width: 80, height: 30))  // 创建按钮
+        btAdd.backgroundColor = UIColor.gray
+        btAdd.setTitle("Add", for:UIControlState())
+        // 为按钮添加点击事件
+        btAdd.addTarget(self, action: #selector(ViewController.addView(_:)), for: UIControlEvents.touchUpInside)
+        self.view.addSubview(btAdd)
+        
+        
+        
+        let stAdd = UIButton(frame: CGRect(x: 120, y: 350, width: 80, height: 30))  // 创建按钮
+        stAdd.backgroundColor = UIColor.gray
+        stAdd.setTitle("Switch", for:UIControlState())
+        // 为按钮添加点击事件
+        stAdd.addTarget(self, action: #selector(ViewController.bringViewBack(_:)), for: UIControlEvents.touchUpInside)
+        self.view.addSubview(stAdd)
+
+        
+       
+        let rmAdd = UIButton(frame: CGRect(x: 210, y: 350, width: 80, height: 30))  // 创建按钮
+        rmAdd.backgroundColor = UIColor.gray
+        rmAdd.setTitle("Remove", for:UIControlState())
+        // 为按钮添加点击事件
+        rmAdd.addTarget(self, action: #selector(ViewController.removeView(_:)), for: UIControlEvents.touchUpInside)
+        self.view.addSubview(rmAdd)
+        
+
+}
+
+
+
+
+案例4: 给一张图片 添加一个颜色相框  设置图片的大小  宽度
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+        
+        
+        
+        let img = UIImage(named:"2.jpg")
+        let imgView = UIImageView(image: img)
+        imgView.frame = CGRect(x: 24, y: 80, width: 300, height: 300)
+        imgView.layer.borderWidth = 10 //设置图片视图的图层边框宽度为 10，视图的绘制部分是通过CALayer类管理
+        imgView.layer.borderColor = UIColor.lightGray.cgColor
+        self.view.addSubview(imgView)
+}
+
+
+
+
+
+
+
+案例5: 给一张图片 添加圆角效果  imgView.layer.cornerRadius = 150     imgView.layer.masksToBounds = true
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+
+        let img = UIImage(named:"2.jpg")
+        let imgView = UIImageView(image: img)
+        imgView.frame = CGRect(x: 24, y: 80, width: 300, height: 300)
+        imgView.layer.borderWidth = 10 //设置图片视图的图层边框宽度为 10，视图的绘制部分是通过CALayer类管理
+        imgView.layer.borderColor = UIColor.lightGray.cgColor
+        imgView.layer.cornerRadius = 150  // 设置图层的圆角半径大小
+        imgView.layer.masksToBounds = true// 设置图层的遮罩覆盖属性  进行裁切
+
+        self.view.addSubview(imgView)
+}
+
+
+
+案例6: 给一张图片 添加阴影效果     imgView.layer.shadowXXX
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+
+        let img = UIImage(named:"2.jpg")
+        let imgView = UIImageView(image: img)
+        imgView.frame = CGRect(x: 24, y: 80, width: 300, height: 300)
+
+        imgView.layer.shadowColor = UIColor.black.cgColor  // 设置图层的阴影颜色
+        imgView.layer.shadowOffset = CGSize(width: 10, height: 10)// 设置图层的偏移值
+        imgView.layer.shadowOpacity = 0.45 // 设置图像阴影的透明度
+        imgView.layer.shadowRadius = 5.0//设置图像阴影半径大小
+        self.view.addSubview(imgView)
+        
+}
+
+
+
+
+
+案例7: 给一视图 添加渐变效果 CAGradientLayer 的使用
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+
+
+        let imgView = UIView(frame: CGRect(x: 24, y: 80, width: 300, height: 300))
+        let gradientLayer = CAGradientLayer() //渐变层对象
+        gradientLayer.frame = imgView.frame    //渐变层的尺寸位置与视图保持一致
+        let colorfrom = UIColor.yellow.cgColor   // 起始颜色为黄色
+        let colorMid = UIColor.red.cgColor     // 中间颜色为黄色
+        let colorTo = UIColor.purple.cgColor // 末尾颜色为黄色
+        gradientLayer.colors = [colorfrom,colorMid,colorTo]  //渐变层的颜色数组属性 调整为三个颜色数组
+        imgView.layer.addSublayer(gradientLayer)   // 将渐变层Layer 加入到视图的Layer
+        self.view.addSubview(imgView)
+}
+
+
+案例8: 给一视图 添加纹理   patternImage
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+
+        let img = UIImage(named:"2.jpg")
+        let patternColor = UIColor.init(patternImage : img!)
+        self.view.backgroundColor = patternColor;
+}
+
+
+案例9: 旋转UIView视图     var mTransform = view1.transform.rotated(by: 3.14/4) 
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+
+        let rect1 = CGRect(x: 50, y: 150, width: 200, height: 50)
+        let view1 = UIView(frame:rect1)
+        view1.backgroundColor = UIColor.brown
+        self.view.addSubview(view1)   // 增加棕色长方形   方便查看效果
+        var mTransform = view1.transform.rotated(by: 3.14/4)   //对视图进行 45度旋转
+        view1.transform = mTransform
+
+}
+
+
+案例10:   手势单击   图像的点击事件   弹框
+
+
+
+    func singeTap() {  // 创建singTap方法用于手势事件处理
+          let alertView = UIAlertController(title: "Infomation", message: "Single Tap", preferredStyle: UIAlertControllerStyle.alert)   // 创建一个提示框
+// 创建一个OK按钮
+let OKAction = UIAlertAction(title: "OK", style: .default, handler:{_ in})   // 创建一个提示框
+alertView.addAction(OKAction)
+self.present(alertView, animated: true, completion:nil)
+    }
+
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+let rect1 = CGRect(x: 32, y: 80, width: 256, height: 256)
+let imgView = UIImageView(frame:rect1)
+let img = UIImage(named:"2.jpg")
+imgView.image = img
+imgView.isUserInteractionEnabled = true  // 开始图像的交互功能
+self.view.addSubview(imgView)
+//手势检测类 定义了手势的基本行为  检测设备手势
+let gesture = UITapGestureRecognizer(target: self, action: #selector(ViewController.singeTap))
+imgView.addGestureRecognizer(gesture)  // 创建的手势处理类给图像视图
+        
+}
+
+
+案例11:   手势长按   图像的长按事件   弹框
+
+    func longPress(sender:UILongPressGestureRecognizer) {  // 创建singTap方法用于手势事件处理
+        print("gesture.state \(sender.state.rawValue)")
+         print("UIGestureRecognizerState.began \(UIGestureRecognizerState.began.rawValue)")
+            print("111")
+        if(sender.state == UIGestureRecognizerState.began){
+                    print("222")
+            let alertView = UIAlertController(title: "Long Click", message: "Single Tap", preferredStyle: UIAlertControllerStyle.alert)   // 创建一个提示框
+            // 创建一个OK按钮
+            let OKAction = UIAlertAction(title: "OK", style: .default, handler:{_ in})   // 创建一个提示框
+            alertView.addAction(OKAction)
+            self.present(alertView, animated: true, completion:nil)
+        }
+                            print("333")
+
+    }
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+let rect1 = CGRect(x: 32, y: 80, width: 256, height: 256)
+let imgView = UIImageView(frame:rect1)
+let img = UIImage(named:"2.jpg")
+imgView.image = img
+imgView.isUserInteractionEnabled = true  // 开始图像的交互功能
+self.view.addSubview(imgView)
+//手势检测类 定义了手势的基本行为  检测设备手势
+//let gestureClick = UITapGestureRecognizer(target: self, action: #selector(ViewController.singeTap))
+        let gestureLongClick = UITapGestureRecognizer(target: self, action: #selector(ViewController.longPress))
+//imgView.addGestureRecognizer(gestureClick)  // 创建的手势处理类给图像视图
+imgView.addGestureRecognizer(gestureLongClick)  // 创建的手势处理类给图像视图
+        
+}
+
+
+案例12:   手势双击   图像的双击 事件   弹框
+gestureDoubleClick.numberOfTapsRequired = 2  //模拟双击事件
+gestureDoubleClick.numberOfTouchesRequired = 1  //手势为单机事件
+
+
+    func doubleClick() {  // 创建singTap方法用于手势事件处理
+        let alertView = UIAlertController(title: "Double Click ", message: "Double Tap", preferredStyle: UIAlertControllerStyle.alert)   // 创建一个提示框
+        // 创建一个OK按钮
+        let OKAction = UIAlertAction(title: "OK", style: .default, handler:{_ in})   // 创建一个提示框
+        alertView.addAction(OKAction)
+        self.present(alertView, animated: true, completion:nil)
+    }
+    
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+let rect1 = CGRect(x: 32, y: 80, width: 256, height: 256)
+let imgView = UIImageView(frame:rect1)
+let img = UIImage(named:"2.jpg")
+imgView.image = img
+imgView.isUserInteractionEnabled = true  // 开始图像的交互功能
+self.view.addSubview(imgView)
+//手势检测类 定义了手势的基本行为  检测设备手势
+//let gestureClick = UITapGestureRecognizer(target: self, action: #selector(ViewController.singeTap))
+//let gestureLongClick = UITapGestureRecognizer(target: self, action: #selector(ViewController.longPress))
+let gestureDoubleClick = UITapGestureRecognizer(target: self, action: #selector(ViewController.doubleClick))
+gestureDoubleClick.numberOfTapsRequired = 2  //模拟双击事件
+gestureDoubleClick.numberOfTouchesRequired = 1  //手势为单机事件
+//imgView.addGestureRecognizer(gestureClick)  // 创建的手势处理类给图像视图
+imgView.addGestureRecognizer(gestureDoubleClick)  // 创建的手势处理类给图像视图
+}
 
