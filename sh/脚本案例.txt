@@ -1,0 +1,84 @@
+1.getcode1.sh
+====================================================================================
+#!/bin/bash
+keyValue=$(cat /zzj500G/bianhao)
+echo "keyValue1: "${keyValue}
+keyValue=`expr $keyValue + 1`
+echo "keyValue2: "${keyValue}
+echo "$keyValue" > /zzj500G/bianhao
+var1=/zzj500G/
+var2=maya_code
+newPath="$var1""$keyValue""$var2"
+echo "newPath: "${newPath}
+
+for((i=0; i<${keyValue}; i++))
+do
+oldPath="$var1""${i}""$var2"
+echo "oldPath"${i}":"${oldPath}
+if [ -d "$oldPath" ];then
+rm -fr "$oldPath"
+break
+fi
+done
+
+if [ -d "$newPath" ];then
+rm -fr "$newPath"
+mkdir "$newPath"
+else
+mkdir "$newPath"
+fi
+cd "$newPath"
+repo init -u ssh://10.140.8.130/platform/manifest -b hw/wh/marshmallow/mtk/MT6737T_base --no-repo-verify --repo-branch=stable 
+repo sync -c
+#expect_init1.sh
+#expect_sync2.sh
+#repo start TEMP --all
+#cd "$newPath"
+#chmod 777 ./hq_build.sh
+#expect_build3.sh
+====================================================================================
+
+2.buildcode2.sh
+====================================================================================
+#!/bin/bash
+keyValue=$(cat /zzj500G/bianhao)
+echo "path_source_build_number: "${keyValue}
+var1=/zzj500G/
+var2=maya_code
+newPath="$var1""$keyValue""$var2"
+cd "$newPath"
+
+
+/usr/bin/expect <<-EOF
+spawn   /zzj500G/sh/buildcode3.sh;
+set timeout 10000
+expect {
+"accout:" {send "zwx320975\r"; exp_continue;}
+"passwd:" {send "zzj7520254~\r"; exp_continue}
+"sign success" {send "#######################\r";exp_continue}
+}
+interact
+expect eof
+EOF
+sleep 10
+echo "---------------------------- "
+echo "============================ "
+echo "---------------------------- "
+echo "============================ "
+====================================================================================
+
+
+3.buildcode3.sh
+====================================================================================
+
+#!/bin/bash
+keyValue=$(cat /zzj500G/bianhao)
+echo "path_source_build_number: "${keyValue}
+var1=/zzj500G/
+var2=maya_code
+newPath="$var1""$keyValue""$var2"
+echo "path_source_build: "${newPath}
+cd "$newPath"
+#source build/envsetup.sh && project l03 && client default && lunch full_hq6737t_66_1ha_m0-eng
+./hq_build.sh l03 default 23
+====================================================================================
