@@ -7,7 +7,7 @@ keyValue=`expr $keyValue + 1`
 echo "keyValue2: "${keyValue}
 echo "$keyValue" > /zzj500G/bianhao
 var1=/zzj500G/
-var2= hello_code
+var2= helloworld_code
 newPath="$var1""$keyValue""$var2"
 echo "newPath: "${newPath}
 
@@ -44,7 +44,7 @@ repo sync -c
 keyValue=$(cat /zzj500G/bianhao)
 echo "path_source_build_number: "${keyValue}
 var1=/zzj500G/
-var2=hello_code
+var2= helloworld_code
 newPath="$var1""$keyValue""$var2"
 cd "$newPath"
 
@@ -75,7 +75,7 @@ echo "============================ "
 keyValue=$(cat /zzj500G/bianhao)
 echo "path_source_build_number: "${keyValue}
 var1=/zzj500G/
-var2= hello_code
+var2= helloworld_code
 newPath="$var1""$keyValue""$var2"
 echo "path_source_build: "${newPath}
 cd "$newPath"
