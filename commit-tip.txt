@@ -1,0 +1,6 @@
+----------上传修改---------
+1 添加系统环境变量 gitpath ,gitpath表示git仓库的主目录例如 gitpath= C:\Users\aaa\Desktop\git_code\Source_Code
+2 cd $gitpath
+3 git  add  ./
+4 git commit -m "填写MarkDown文件README.md"
+5 git push origin master 
