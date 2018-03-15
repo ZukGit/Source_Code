@@ -1,0 +1,4 @@
+git add XXX
+git commit -m "XXXX"
+git remote  add origin https:git@github.com:ZukGit/IT.git
+git push -u origin master
