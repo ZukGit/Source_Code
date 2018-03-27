@@ -4,3 +4,6 @@
 3 git  add  ./
 4 git commit -m "填写MarkDown文件README.md"
 5 git push origin master 
+
+--------更新当前代码-------
+git pull 
