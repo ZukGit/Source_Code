@@ -1,3 +1,26 @@
+-------------------使用 创建一个本地的代码-------------------
+1.在官网 https://github.com/ 创建一个新的 Repository仓库
+
+2.在SHELL命令下创建用于存放 git代码的目录
+mkdir coding
+cd coding
+
+3.在SHELL命令下执行初始化命令
+git init
+
+4.执行git remote add 添加在第一步在github中的 Repository仓库
+git remote add origin git@github.com:XXXXyourNameXXXX/XXXXyourRepoXXXX.git
+
+5.git add 添加修改文件
+git add xxx
+
+6.git commit  提交修改
+git commit -m ”说明这次的提交“
+
+7.上传到主分支
+git push origin master
+
+============提交代码操作=====================
 git add XXX
 git commit -m "XXXX"
 git remote  add origin https:git@github.com:ZukGit/IT.git
